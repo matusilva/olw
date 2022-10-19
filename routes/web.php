@@ -31,4 +31,8 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::get('/beers', [BeerController::class, 'index'])->middleware(['auth']);
+Route::prefix('beers')->group(function () {
+    Route::get('/', [BeerController::class, 'index'])->middleware(['auth']);
+    
+    Route::get('/export', [BeerController::class, 'export'])->middleware(['auth']);
+});
