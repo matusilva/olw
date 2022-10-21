@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\BeerController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -31,8 +32,13 @@ Route::get('/dashboard', function () {
 
 require __DIR__.'/auth.php';
 
-Route::prefix('beers')->group(function () {
-    Route::get('/', [BeerController::class, 'index'])->middleware(['auth']);
-    
-    Route::get('/export', [BeerController::class, 'export'])->middleware(['auth']);
+Route::group([
+    'prefix' => 'beers',
+    'middleware' => 'auth'
+], function () {
+    Route::get('/', [BeerController::class, 'index']);
+
+    Route::get('/export', [BeerController::class, 'export']);
+
+    Route::resource("reports", ExportController::class)->only(["index", "destroy"]);
 });
