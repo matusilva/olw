@@ -3,6 +3,13 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
 export default defineConfig({
+    /* add this to windows */
+    server: {
+        hmr: {
+            host: 'localhost'
+        }
+    },
+    /* end */
     plugins: [
         laravel({
             input: 'resources/js/app.js',
